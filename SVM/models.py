@@ -67,11 +67,9 @@ class LinearSVM:
 
 class NonLinearSVM:
 
-    def __init__(self, C=None,sigma=None):
-        self.C = C
+    def __init__(self, sigma=None):
         self.sigma = sigma
         self.biases = None
-        if self.C is not None: self.C = float(self.C)
         if self.sigma is None: self.sigma = 5.0
 
     @staticmethod
@@ -109,17 +107,6 @@ class NonLinearSVM:
         b = matrix(np.zeros(1))
         G = matrix(-np.identity(n_samples))
         h = matrix(np.zeros(n_samples))
-
-        # if self.C is None:
-        #     G = matrix(np.diag(np.ones(n_samples) * -1))
-        #     h = matrix(np.zeros(n_samples))
-        # else:
-        #     tmp1 = np.diag(np.ones(n_samples) * -1)
-        #     tmp2 = np.identity(n_samples)
-        #     G = matrix(np.vstack((tmp1, tmp2)))
-        #     tmp1 = np.zeros(n_samples)
-        #     tmp2 = np.ones(n_samples) * self.C
-        #     h = matrix(np.hstack((tmp1, tmp2)))
 
         solution = solvers.qp(P,q,G,h,A,b)
         a = np.ravel(solution['x'])
